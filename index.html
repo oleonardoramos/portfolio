@@ -1,11 +1,463 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Portfólio - Editor de Vídeo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #b8b8d1;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+        }
+
+        .video-wrapper iframe,
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .video-info p {
+            color: #b8b8d1;
+            font-size: 0.95rem;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d1d1e0;
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .contact-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .contact-details a {
+            color: #b8b8d1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-details a:hover {
+            color: #667eea;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px 0;
+            text-align: center;
+            color: #b8b8d1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <div class="container">
+            <h1>Seu Nome Aqui</h1>
+            <p>Editor de Vídeo Profissional</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#sobre">Sobre Mim</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2>Meu Portfólio</h2>
+            <div class="video-grid">
+                <!-- Vídeo 1 -->
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <!-- Substitua com o link do seu vídeo do YouTube/Vimeo -->
+                        <!-- <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
+                        <div class="video-placeholder">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Título do Projeto 1</h3>
+                        <p>Breve descrição do projeto. Edição comercial para marca de moda, incluindo colorização cinematográfica e efeitos visuais.</p>
+                    </div>
+                </div>
+
+                <!-- Vídeo 2 -->
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <div class="video-placeholder">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Título do Projeto 2</h3>
+                        <p>Videoclipe musical com edição dinâmica e sincronização perfeita com a batida. Motion graphics e correção de cor avançada.</p>
+                    </div>
+                </div>
+
+                <!-- Vídeo 3 -->
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <div class="video-placeholder">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Título do Projeto 3</h3>
+                        <p>Documentário corporativo com narrativa envolvente. Entrevistas, b-roll cinematográfico e pós-produção completa.</p>
+                    </div>
+                </div>
+
+                <!-- Vídeo 4 -->
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <div class="video-placeholder">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Título do Projeto 4</h3>
+                        <p>Conteúdo para redes sociais otimizado para engagement. Edição ágil com legendas animadas e transições criativas.</p>
+                    </div>
+                </div>
+
+                <!-- Vídeo 5 -->
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <div class="video-placeholder">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Título do Projeto 5</h3>
+                        <p>Showreel pessoal demonstrando versatilidade em diferentes estilos de edição e gêneros audiovisuais.</p>
+                    </div>
+                </div>
+
+                <!-- Vídeo 6 -->
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <div class="video-placeholder">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Título do Projeto 6</h3>
+                        <p>Trailer cinematográfico com storytelling visual impactante. Sound design, VFX e grading profissional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <div class="container">
+            <h2>Sobre Mim</h2>
+            <div class="about-content">
+                <p>
+                    Olá! Sou um editor de vídeo apaixonado por contar histórias visuais que conectam e inspiram. 
+                    Com [X] anos de experiência na indústria audiovisual, especializo-me em transformar footage bruto 
+                    em narrativas cinematográficas cativantes.
+                </p>
+                <p>
+                    Domino ferramentas como Adobe Premiere Pro, After Effects, DaVinci Resolve e Final Cut Pro. 
+                    Minha abordagem combina técnica apurada com sensibilidade artística, sempre buscando o equilíbrio 
+                    perfeito entre estética e mensagem.
+                </p>
+                <p>
+                    Trabalhei com clientes de diversos segmentos - desde startups inovadoras até marcas consolidadas, 
+                    sempre entregando projetos que superam expectativas. Acredito que cada frame conta uma história, 
+                    e meu objetivo é fazer cada segundo valer a pena.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="container">
+            <h2>Entre em Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <a href="mailto:seu.email@exemplo.com">seu.email@exemplo.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h3>Telefone</h3>
+                        <a href="tel:+351912345678">+351 912 345 678</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <div class="contact-details">
+                        <h3>LinkedIn</h3>
+                        <a href="https://linkedin.com/in/seuperfil" target="_blank">linkedin.com/in/seuperfil</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🎬</div>
+                    <div class="contact-details">
+                        <h3>Instagram</h3>
+                        <a href="https://instagram.com/seuperfil" target="_blank">@seuperfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Seu Nome. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll para links de navegação
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Animação ao scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar animação aos cards de vídeo
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
