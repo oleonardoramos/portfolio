@@ -287,8 +287,8 @@ footer {
 
     /* ========== TAMANHO DA FOTO NO TELEMÓVEL ========== */
     .about-image img {
-        width: 200px;    /* ← TAMANHO NO MOBILE */
-        height: 200px;   /* ← TAMANHO NO MOBILE */
+        width: 300px;    /* ← TAMANHO NO MOBILE */
+        height: 400px;   /* ← TAMANHO NO MOBILE */
     }
     /* ================================================== */
 }
