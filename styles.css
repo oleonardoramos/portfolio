@@ -157,40 +157,12 @@ section h2::after {
 
 /* About Section */
 .about-content {
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.08);
     padding: 40px;
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    gap: 40px;
-    align-items: center;
-}
-
-.about-image {
-    flex-shrink: 0;
-}
-
-/* ========== TAMANHO DA FOTO AQUI! ========== */
-.about-image img {
-    width: 300px;     /* ← MUDA ESTE NÚMERO PARA AUMENTAR/DIMINUIR */
-    height: 400px;    /* ← MUDA ESTE NÚMERO TAMBÉM */
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid rgba(102, 126, 234, 0.5);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-/* =========================================== */
-
-.about-image img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-}
-
-.about-text {
-    flex: 1;
 }
 
 .about-content p {
@@ -279,18 +251,6 @@ footer {
         flex-direction: column;
         gap: 15px;
     }
-
-    .about-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    /* ========== TAMANHO DA FOTO NO TELEMÓVEL ========== */
-    .about-image img {
-        width: 300px;    /* ← TAMANHO NO MOBILE */
-        height: 400px;   /* ← TAMANHO NO MOBILE */
-    }
-    /* ================================================== */
 }
 
 /* Smooth Scroll */
